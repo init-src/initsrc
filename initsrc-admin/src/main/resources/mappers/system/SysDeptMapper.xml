@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.admin.system.dao.SysDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.admin.system.entity.dept.SysDept">
+        <id column="dept_id" property="deptId" />
+        <result column="parent_id" property="parentId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="link_man" property="linkMan" />
+        <result column="link_mobile" property="linkMobile" />
+        <result column="sort" property="sort" />
+        <result column="status" property="status" />
+        <result column="search_code" property="searchCode" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.admin.system.entity.dept.vo.SysDeptListVo">
+        <id column="dept_id" property="deptId" />
+        <result column="parent_id" property="parentId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="link_man" property="linkMan" />
+        <result column="link_mobile" property="linkMobile" />
+        <result column="sort" property="sort" />
+        <result column="status" property="status" />
+        <result column="fdeptName" property="fdeptName" />
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.admin.system.entity.dept.vo.SysDeptDetailVo">
+        <id column="dept_id" property="deptId" />
+        <result column="parent_id" property="parentId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="link_man" property="linkMan" />
+        <result column="link_mobile" property="linkMobile" />
+        <result column="sort" property="sort" />
+        <result column="status" property="status" />
+        <result column="fdeptName" property="fdeptName" />
+    </resultMap>
+
+
+
+    <!-- 列表展示字段 -->
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+            a.dept_id,a.parent_id,a.code,a.name,a.link_man,a.link_mobile,a.sort,a.status,
+            (select name from is_sys_dept where dept_id  = a.parent_id limit 1) as fdeptName,
+        </trim>
+    </sql>
+
+    <!-- 详情展示字段 -->
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+            a.dept_id,a.parent_id,a.code,a.name,a.link_man,a.link_mobile,a.sort,a.status,
+            (select name from is_sys_dept where dept_id  = a.parent_id limit 1) as fdeptName,
+        </trim>
+    </sql>
+
+    <!-- 查询部门列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_dept a
+        <where>
+            <if test="parentId != null  and parentId != ''"> and a.parent_id = #{parentId}</if>
+            <if test="code != null  and code != ''"> and a.code like concat('%', #{code}, '%')</if>
+            <if test="name != null  and name != ''"> and a.name like concat('%', #{name}, '%')</if>
+            and a.dr = 1
+        </where>
+        ${params.dataScope}
+    </select>
+
+    <!-- 查询部门详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_sys_dept a
+        <trim prefix="where" prefixOverrides="and">
+            and  a.dept_id = #{deptId}
+            and a.dr = 1
+        </trim>
+    </select>
+
+    <!-- code字段验证唯一 -->
+    <select id="checkerCodeOnly" resultType="java.lang.Integer">
+        select count(1) from is_sys_dept
+        <trim prefix="where" prefixOverrides="and">
+            and dr = 1 and code = #{code}
+        </trim>
+    </select>
+
+    <!--根据父类ID获取子类数量 -->
+    <select id="selectByParendId" resultType="java.lang.Integer">
+        select count(1) from is_sys_dept
+        <trim prefix="where" prefixOverrides="and">
+            and dr = 1
+            and dept_id = #{id}
+        </trim>
+    </select>
+
+    <!--  parent_id字段关联查询列表-->
+    <select id="parentIdSelectData" resultType="com.initsrc.common.base.NodeEntity">
+        select a.dept_id as id,a.parent_id as parentId,a.name as label from is_sys_dept a where a.dr = 1
+        ${params.dataScope}
+        order by a.sort asc
+    </select>
+</mapper>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.dev.dao.DevTableMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.dev.entity.table.DevTable">
+        <id column="table_id" property="tableId" />
+        <result column="table_name" property="tableName" />
+        <result column="perm_id" property="permId" />
+        <result column="table_comment" property="tableComment" />
+        <result column="class_name" property="className" />
+        <result column="is_category" property="isCategory" />
+        <result column="parent_key" property="parentKey" />
+        <result column="is_ref" property="isRef" />
+        <result column="is_excel" property="isExcel" />
+        <result column="view_path" property="viewPath" />
+        <result column="package_name" property="packageName" />
+        <result column="module_name" property="moduleName" />
+        <result column="biz_name" property="bizName" />
+        <result column="function_name" property="functionName" />
+        <result column="gen_author" property="genAuthor" />
+        <result column="sub_table_id" property="subTableId" />
+        <result column="sub_key" property="subKey" />
+        <result column="column_key" property="columnKey" />
+        <result column="vue_table_type" property="vueTableType" />
+        <result column="vue_edit_type" property="vueEditType" />
+        <result column="vue_detail_type" property="vueDetailType" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.dev.entity.table.vo.DevTableListVo">
+        <id column="table_id" property="tableId"/>
+        <result column="table_name" property="tableName"/>
+        <result column="table_comment" property="tableComment"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.dev.entity.table.vo.DevTableDetailVo">
+        <id column="table_id" property="tableId" />
+        <id column="table_name" property="tableName" />
+        <result column="perm_id" property="permId" />
+        <result column="table_comment" property="tableComment" />
+        <result column="class_name" property="className" />
+        <result column="is_category" property="isCategory" />
+        <result column="parent_key" property="parentKey" />
+        <result column="is_ref" property="isRef" />
+        <result column="is_excel" property="isExcel" />
+        <result column="view_path" property="viewPath" />
+        <result column="package_name" property="packageName" />
+        <result column="module_name" property="moduleName" />
+        <result column="biz_name" property="bizName" />
+        <result column="function_name" property="functionName" />
+        <result column="gen_author" property="genAuthor" />
+        <result column="sub_table_id" property="subTableId" />
+        <result column="sub_key" property="subKey" />
+        <result column="column_key" property="columnKey" />
+        <result column="vue_table_type" property="vueTableType" />
+        <result column="vue_edit_type" property="vueEditType" />
+        <result column="vue_detail_type" property="vueDetailType" />
+        <collection property="columns" javaType="java.util.List" resultMap="DevTableColumnResult"/>
+    </resultMap>
+
+    <!-- 子表信息 -->
+    <resultMap type="com.initsrc.dev.entity.column.vo.DevColumnVo" id="DevTableColumnResult">
+        <id property="columnId" column="column_id"/>
+        <result property="tableId" column="table_id"/>
+        <result property="columnName" column="column_name"/>
+        <result property="columnComment" column="column_comment"/>
+        <result property="columnType" column="column_type"/>
+        <result property="columnTypeName" column="column_type_name"/>
+        <result property="javaType" column="java_type"/>
+        <result property="javaField" column="java_field"/>
+        <result property="isKey" column="is_key"/>
+        <result property="isIncrement" column="is_increment"/>
+        <result property="isRequired" column="is_required"/>
+        <result property="verifyName" column="verify_name"/>
+        <result property="isInsert" column="is_insert"/>
+        <result property="isEdit" column="is_edit"/>
+        <result property="isList" column="is_list"/>
+        <result property="isDetail" column="is_detail"/>
+        <result property="isQuery" column="is_query"/>
+        <result property="queryType" column="query_type"/>
+        <result property="isVersion" column="is_version"/>
+        <result property="isOnly" column="is_only"/>
+        <result property="isFillCreate" column="is_fill_create"/>
+        <result property="isFillUpdate" column="is_fill_update"/>
+        <result property="isTableLogic" column="is_table_logic"/>
+        <result property="htmlType" column="html_type"/>
+        <result column="is_search" property="isSearch" />
+        <result column="dict_type" property="dictType" />
+        <result column="left_table" property="leftTable" />
+        <result column="left_key" property="leftKey" />
+        <result column="left_parent" property="leftParent" />
+        <result column="left_label" property="leftLabel" />
+        <result column="left_alias" property="leftAlias" />
+        <result property="sort" column="sort"/>
+    </resultMap>
+
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+          a.table_id,a.table_name,a.table_comment,a.create_time,a.update_time,
+        </trim>
+    </sql>
+
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+            a.table_id,a.table_name,a.table_comment,a.class_name,a.is_category,a.is_excel,a.view_path,a.package_name,a.module_name,a.biz_name,a.is_ref,a.perm_id,
+            a.function_name,a.gen_author,a.sub_table_id,a.sub_key,a.column_key,a.vue_table_type,a.vue_edit_type,a.vue_detail_type,a.parent_key,
+            b.column_id,b.table_id,b.column_name,b.column_comment,b.column_type,b.column_type_name,b.java_type,b.java_field,b.is_key,b.is_increment,b.verify_name,
+            b.is_required,b.is_insert,b.is_edit,b.is_list,b.is_detail,b.is_query,b.query_type,b.is_only,b.is_version,b.is_fill_create,b.is_fill_update,b.is_table_logic,
+            b.html_type,b.is_search,b.dict_type,b.left_table,b.left_key,b.left_parent,b.left_label,b.left_alias,b.sort,
+        </trim>
+    </sql>
+
+    <!-- 查询数据库表列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_dev_table a
+        <where>
+            <if test="tableName != null  and tableName != ''">and table_name = #{tableName}</if>
+            <if test="tableComment != null  and tableComment != ''">and table_comment = #{tableComment}</if>
+            and a.dr = 1
+        </where>
+    </select>
+
+    <!-- 查询数据库表详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_dev_table a
+        left join is_dev_column b on a.table_id = b.table_id
+        <trim prefix="where" prefixOverrides="and">
+            and  a.table_id = #{id}
+            and a.dr = 1 and b.dr = 1
+        </trim>
+        order by b.sort asc
+    </select>
+
+    <!-- 查询所有数据库表详情 -->
+    <select id="findDetailList" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_dev_table a
+        left join is_dev_column b on a.table_id = b.table_id
+        <trim prefix="where" prefixOverrides="and">
+            and a.dr = 1 and b.dr = 1
+        </trim>
+        order by b.sort asc
+    </select>
+
+    <!-- 根据DB获取数据 -->
+    <select id="selectDetailByDb" resultMap="DetailResultMap">
+        SELECT
+          t.table_name, t.table_comment, t.create_time, t.update_time,
+          (case when (c.is_nullable = 'no' <![CDATA[ && ]]> c.column_key != 'PRI') then '1' else null end) as is_required,
+            c.column_name,
+            ( CASE WHEN c.column_key = 'PRI' THEN '1' ELSE '0' END ) AS is_key,
+            c.ordinal_position AS sort,
+            c.column_comment,
+            ( CASE WHEN c.extra = 'auto_increment' THEN '1' ELSE '0' END ) AS is_increment,
+            c.column_type as column_type_name,
+            c.data_type as  column_type
+        FROM
+            information_schema.tables t
+            LEFT JOIN information_schema.COLUMNS c on t.table_name = c.table_name
+        WHERE
+	    t.table_schema = (select database())  and c.table_schema = (SELECT DATABASE())  and t.table_name = #{tableName}
+    </select>
+
+    <!--查询权限列表 -->
+    <select id="getPermList" resultType="com.initsrc.common.base.NodeEntity">
+       select perm_id as id,parent_id as parentId,name as label from is_sys_perm where
+       dr = 1
+    </select>
+
+</mapper>

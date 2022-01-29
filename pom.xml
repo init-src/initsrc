@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.initsrc</groupId>
+    <artifactId>initsrc-server</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    <modules>
+        <module>initsrc-base</module>
+        <module>initsrc-core</module>
+        <module>initsrc-common</module>
+        <module>initsrc-devtool</module>
+        <module>initsrc-monitor</module>
+        <module>initsrc-admin</module>
+    </modules>
+
+    <name>initsrc</name>
+    <url></url>
+    <description>启源服务端</description>
+
+    <!-- 统一版本管理 -->
+    <properties>
+        <initsrc.version>1.0.0</initsrc.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <mybatis-plus.generator>3.2.0</mybatis-plus.generator>
+        <druid.version>1.1.10</druid.version>
+        <p6spy.version>3.8.0</p6spy.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger.models>1.5.21</swagger.models>
+        <swagger.bootstrap>1.9.4</swagger.bootstrap>
+        <hutool.version>5.3.8</hutool.version>
+        <pagehelper.version>5.1.10</pagehelper.version>
+        <jsqlparser.version>3.1</jsqlparser.version>
+        <shiro-spring.version>1.4.0</shiro-spring.version>
+        <jwt.version>3.3.0</jwt.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <freenarker.version>2.3.28</freenarker.version>
+        <fastjson.version>1.2.75</fastjson.version>
+        <alioss.version>3.10.2</alioss.version>
+        <txcos.version>5.6.39</txcos.version>
+        <txstscos.version>3.0.8</txstscos.version>
+        <oshi.version>3.9.1</oshi.version>
+        <jna.version>4.5.2</jna.version>
+        <bitwalker.version>1.21</bitwalker.version>
+        <commons.version>2.6</commons.version>
+        <lombok.version>1.18.6</lombok.version>
+        <easypoi.version>4.2.0</easypoi.version>
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot的依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.3.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--Shiro核心框架 -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+
+            <!--Mybatis-Plus依赖-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.generator}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- Druid连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!-- pagehelper分页 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <!-- pagehelper 依赖 -->
+            <dependency>
+                <groupId>com.github.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>${jsqlparser.version}</version>
+            </dependency>
+
+            <!-- lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- p6spy -->
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+
+            <!-- Swagger 用来构建RESTful API -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.models}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.models}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger.bootstrap}</version>
+            </dependency>
+
+            <!--freemarker代码生成使用模板 -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freenarker.version}</version>
+            </dependency>
+
+            <!-- JWT：Json Web Token 配置 用于请求身份验证 -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!-- kaptcha 验证码开源组件 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- 阿里云OSS -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${alioss.version}</version>
+            </dependency>
+
+            <!-- 腾讯云COS -->
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${txcos.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tencent.cloud</groupId>
+                <artifactId>cos-sts-java</artifactId>
+                <version>${txstscos.version}</version>
+            </dependency>
+
+            <!--  IO工具 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.version}</version>
+            </dependency>
+
+            <!--国内超级好用的一个util包，囊括了常用的工具方法-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.11.3</version>
+            </dependency>
+
+            <!-- 获取系统信息 -->
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>${oshi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+
+            <!-- jsch支持 -->
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>0.1.54</version>
+            </dependency>
+
+            <!-- 获取用户操作系统 浏览器等 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${bitwalker.version}</version>
+            </dependency>
+
+            <!-- Easypoi -->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-base</artifactId>
+                <version>${easypoi.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>guava</artifactId>
+                        <groupId>com.google.guava</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-web</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-annotation</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+
+            <!-- 通用工具模块-->
+            <dependency>
+                <groupId>com.initsrc</groupId>
+                <artifactId>initsrc-common</artifactId>
+                <version>${initsrc.version}</version>
+            </dependency>
+
+            <!-- 核心模块-->
+            <dependency>
+                <groupId>com.initsrc</groupId>
+                <artifactId>initsrc-core</artifactId>
+                <version>${initsrc.version}</version>
+            </dependency>
+
+            <!-- 代码生成 -->
+            <dependency>
+                <groupId>com.initsrc</groupId>
+                <artifactId>initsrc-devtool</artifactId>
+                <version>${initsrc.version}</version>
+            </dependency>
+
+            <!-- 代码生成 -->
+            <dependency>
+                <groupId>com.initsrc</groupId>
+                <artifactId>initsrc-monitor</artifactId>
+                <version>${initsrc.version}</version>
+            </dependency>
+
+            <!-- 后台管理API -->
+            <dependency>
+                <groupId>com.initsrc</groupId>
+                <artifactId>initsrc-admin</artifactId>
+                <version>${initsrc.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- 指定jdk版本，和指定编码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- maven 打包时跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

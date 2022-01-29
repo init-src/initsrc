@@ -1,0 +1,132 @@
+/**
+ * 亮色调
+ */
+html,
+#app,
+body {
+	color: #8687a7;
+	background-color: #f6f8f9;
+}
+
+
+/**
+ * 菜单区域
+ */
+
+.el-aside {
+	background-color: #FFFFFF;
+}
+
+.dshfn-aside-user .user-info a {
+	color: #343a40;
+}
+
+.dshfn-aside-user .user-info .text-body {
+	color: #8687a7;
+}
+
+.dshfn-header-tabs{
+	background-color: #FFFFFF;
+}
+
+.dshfn-tabs-content .el-tabs__header .el-tabs__item.is-active,
+.dshfn-tabs-content .el-tabs__header .el-tabs__item.is-active:hover {
+	background: #e8f4ff;
+}
+
+/**
+ * 内容区域
+ */
+.dshfn-tree-content{
+	background-color: white;
+	border-right: 5px solid #f6f8f9 !important;
+}
+
+.dshfn-card {
+	background-color: #fff;
+	border: 0 solid #f6f6f6;
+}
+
+.dshfn-table-content {
+	background-color: white;
+}
+
+.dshfn-commonDrawer .footer{
+	border-top: 1px solid #eee;
+	background:  white;
+}
+
+.add-background{
+	background-color: #FFFFFF;
+}
+
+.dshfn-content-select {
+    background-color: #fff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dshfn-content-tap {
+    background-color: #fff;
+}
+
+/* 固定底部按钮框 */
+.dshfn-footer-btn {
+	background-color: white;
+	box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.05);
+}
+
+/**
+ * 权限展示
+ */
+.permission li {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/**
+ * element 组件样式
+ */
+
+.dshfn-aside-menu .el-menu .is-active .el-submenu__title i,
+.dshfn-aside-menu .el-menu .is-active .el-submenu__title span {
+	color: #3b5de7;
+}
+
+.dshfn-aside-menu .el-submenu__title:hover i,
+.dshfn-aside-menu .el-submenu__title:hover span {
+	color: #585858;
+}
+
+.dshfn-aside-menu .el-menu-item:hover {
+	background-color: #f6f8f9 !important;
+	color: #585858 !important;
+}
+
+.dshfn-aside-menu .el-menu-item:hover i {
+	color: #585858 !important;
+}
+
+.dshfn-aside-menu .el-menu-item:hover {
+	background-color: #f6f8f9 !important;
+	color: #000 !important;
+}
+
+.dshfn-aside-menu .el-menu-item.is-active {
+	background-color: #f6f8f9 !important;
+	color: #3b5de7 !important;
+}
+
+.el-drawer__body{
+	background-color: #f6f8f9 !important;
+}
+
+@media (max-width: 768px) {
+	.el-dialog__footer {
+		border-top: 1px solid #ffff;
+		background: #ffff;
+	}
+	.dshfn-tree-content {
+	    border-bottom: 10px solid #f6f8f9 !important;
+		border-right: none !important;
+	}
+}
+

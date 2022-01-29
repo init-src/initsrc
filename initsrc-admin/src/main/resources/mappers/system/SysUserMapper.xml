@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.admin.system.dao.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.admin.system.entity.user.SysUser">
+        <id column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="nick_name" property="nickName" />
+        <result column="user_name" property="userName" />
+        <result column="user_pwd" property="userPwd" />
+        <result column="salt" property="salt" />
+        <result column="head_img" property="headImg" />
+        <result column="sex" property="sex" />
+        <result column="birthday" property="birthday" />
+        <result column="email" property="email" />
+        <result column="mobile" property="mobile" />
+        <result column="status" property="status" />
+        <result column="role_id" property="roleId" />
+        <result column="login_date" property="loginDate" />
+        <result column="login_ip" property="loginIp" />
+        <result column="remark" property="remark" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.admin.system.entity.user.vo.SysUserListVo">
+        <id column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="nick_name" property="nickName" />
+        <result column="user_name" property="userName" />
+        <result column="head_img" property="headImg" />
+        <result column="email" property="email" />
+        <result column="mobile" property="mobile" />
+        <result column="status" property="status" />
+        <result column="role_id" property="roleId" />
+        <result column="deptName" property="deptName" />
+    </resultMap>
+
+    <!-- 登录信息查询映射结果 -->
+    <resultMap id="AuthInfoResult" type="com.initsrc.admin.base.entity.auth.vo.AuthInfoVo">
+        <id column="id" property="id" />
+        <result column="dept_id" property="deptId" />
+        <result column="nick_name" property="nickName" />
+        <result column="user_name" property="userName" />
+        <result column="head_img" property="headImg" />
+        <result column="email" property="email" />
+        <result column="mobile" property="mobile" />
+        <result column="dept_name" property="deptName" />
+        <collection  property="roles"  javaType="java.util.List"  resultMap="RoleResult" />
+    </resultMap>
+
+    <resultMap id="RoleResult" type="com.initsrc.admin.system.entity.role.vo.SysRoleListVo">
+        <id property="roleId"    column="role_id"/>
+        <result property="isSearch"  column="is_search"/>
+        <result property="roleName"  column="role_name"/>
+        <result property="powerDepts" column="power_depts" />
+        <result property="status" column="status" />
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.admin.system.entity.user.vo.SysUserDetailVo">
+        <id column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="nick_name" property="nickName" />
+        <result column="user_name" property="userName" />
+        <result column="head_img" property="headImg" />
+        <result column="sex" property="sex" />
+        <result column="birthday" property="birthday" />
+        <result column="email" property="email" />
+        <result column="mobile" property="mobile" />
+        <result column="status" property="status" />
+        <result column="login_date" property="loginDate" />
+        <result column="login_ip" property="loginIp" />
+        <result column="remark" property="remark" />
+        <result column="deptName" property="deptName" />
+        <collection  property="roles"  javaType="java.util.List"  resultMap="RoleResult" />
+    </resultMap>
+
+
+
+    <!-- 列表展示字段 -->
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+        a.user_id,a.dept_id,a.nick_name,a.user_name,a.head_img,a.email,a.mobile,a.status,
+        (select name from is_sys_dept where dept_id  = a.dept_id limit 1) as deptName,
+        </trim>
+    </sql>
+
+    <!-- 详情展示字段 -->
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+        a.user_id,a.dept_id,a.nick_name,a.user_name,a.head_img,a.sex,a.birthday,a.email,a.mobile,a.status,a.login_date,a.login_ip,a.remark,
+        d.name as deptName,r.role_id,
+            r.is_search,
+            r.role_name,
+        </trim>
+    </sql>
+
+    <!-- 查询用户列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_user a
+        <where>
+            <if test="deptId != null  and deptId != ''"> and a.dept_id = #{deptId}</if>
+            <if test="nickName != null  and nickName != ''"> and a.nick_name like concat('%', #{nickName}, '%')</if>
+            <if test="userName != null  and userName != ''"> and a.user_name like concat('%', #{userName}, '%')</if>
+            <if test="mobile != null  and mobile != ''"> and a.mobile = #{mobile}</if>
+               and a.dr = 1
+        </where>
+        ${params.dataScope}
+    </select>
+
+    <!-- 查询用户详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_sys_user a
+        left join is_sys_dept d on d.dept_id = A.dept_id
+        LEFT JOIN is_sys_user_role ur ON ur.user_id = A.user_id
+        left JOIN is_sys_role r on r.role_id = ur.role_id
+        <trim prefix="where" prefixOverrides="and">
+            and  a.user_id = #{userId}
+            and a.dr = 1
+        </trim>
+    </select>
+
+    <!-- user_name字段验证唯一 -->
+    <select id="checkerUserNameOnly" resultType="java.lang.Integer">
+        select count(1) from is_sys_user
+        <trim prefix="where" prefixOverrides="and">
+          and dr = 1 and user_name = #{userName}
+        </trim>
+    </select>
+
+    <!-- 登录验证信息 -->
+    <select id="getLoginInfoByUsername" resultType="com.initsrc.admin.base.entity.auth.vo.LoginUserInfoVo">
+        select user_id as id,user_name,user_pwd,salt,nick_name from is_sys_user where dr = 1 and status = 1 and user_name = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 获取登录者信息 -->
+    <select id="getLoginPermByUserId" resultMap="AuthInfoResult" >
+        SELECT
+            u.user_id AS id,
+            u.nick_name,
+            u.mobile,
+            u.email,
+            u.head_img,
+            r.role_id,
+            r.is_search,
+            r.role_name,
+            r.power_depts,
+            r.status,
+            d.dept_id,
+            d.name as dept_name
+        FROM
+            is_sys_user u
+            left join is_sys_dept d on d.dept_id = u.dept_id
+            LEFT JOIN is_sys_user_role ur ON ur.user_id = u.user_id
+            left JOIN is_sys_role r on r.role_id = ur.role_id
+         where u.dr = 1 and r.dr = 1  and u.status = 1 and u.user_id = #{authId}
+    </select>
+
+    <!--  根据角色ID获取所有用户 -->
+    <select id="findUserByRoleId" resultType="com.initsrc.admin.system.entity.user.vo.SysUserListVo">
+        select
+        a.user_id,a.nick_name
+        from is_sys_user a
+        left join is_sys_user_role ur on ur.user_id = a.user_id
+        where a.dr = 1 and ur.role_id = #{roleId}
+    </select>
+</mapper>

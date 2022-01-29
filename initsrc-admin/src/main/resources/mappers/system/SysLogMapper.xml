@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.admin.system.dao.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.admin.system.entity.log.SysLog">
+        <id column="log_id" property="logId" />
+        <result column="user_id" property="userId" />
+        <result column="title" property="title" />
+        <result column="biz_type" property="bizType" />
+        <result column="method" property="method" />
+        <result column="request_type" property="requestType" />
+        <result column="platform_type" property="platformType" />
+        <result column="request_name" property="requestName" />
+        <result column="request_url" property="requestUrl" />
+        <result column="request_ip" property="requestIp" />
+        <result column="request_adress" property="requestAdress" />
+        <result column="request_param" property="requestParam" />
+        <result column="request_result" property="requestResult" />
+        <result column="status" property="status" />
+        <result column="error_msg" property="errorMsg" />
+        <result column="browser" property="browser" />
+        <result column="os" property="os" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.admin.system.entity.log.vo.SysLogListVo">
+        <id column="log_id" property="logId" />
+        <result column="title" property="title" />
+        <result column="biz_type" property="bizType" />
+        <result column="method" property="method" />
+        <result column="request_type" property="requestType" />
+        <result column="platform_type" property="platformType" />
+        <result column="request_name" property="requestName" />
+        <result column="request_ip" property="requestIp" />
+        <result column="request_url" property="requestUrl" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.admin.system.entity.log.vo.SysLogDetailVo">
+        <id column="log_id" property="logId" />
+        <result column="user_id" property="userId" />
+        <result column="title" property="title" />
+        <result column="biz_type" property="bizType" />
+        <result column="method" property="method" />
+        <result column="request_type" property="requestType" />
+        <result column="platform_type" property="platformType" />
+        <result column="request_name" property="requestName" />
+        <result column="request_url" property="requestUrl" />
+        <result column="request_ip" property="requestIp" />
+        <result column="request_adress" property="requestAdress" />
+        <result column="request_param" property="requestParam" />
+        <result column="request_result" property="requestResult" />
+        <result column="status" property="status" />
+        <result column="error_msg" property="errorMsg" />
+        <result column="browser" property="browser" />
+        <result column="os" property="os" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+
+
+    <!-- 列表展示字段 -->
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+            a.log_id,a.title,a.biz_type,a.method,a.request_type,a.platform_type,a.request_name,a.request_ip,a.request_url,a.status,a.create_time
+        </trim>
+    </sql>
+
+    <!-- 详情展示字段 -->
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+            a.log_id,a.user_id,a.title,a.biz_type,a.method,a.request_type,a.platform_type,a.request_name,a.request_url,a.request_ip,a.request_adress,a.request_param,a.request_result,a.status,a.error_msg,a.browser,a.os,
+        a.create_time
+        </trim>
+    </sql>
+
+    <!-- 查询操作日志列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_log a
+        <where>
+            <if test="title != null  and title != ''"> and a.title like concat('%', #{title}, '%')</if>
+            <if test="bizType != null  and bizType != ''"> and a.biz_type = #{bizType}</if>
+            <if test="platformType != null  and platformType != ''"> and a.platform_type = #{platformType}</if>
+            and a.dr = 1
+        </where>
+    </select>
+
+    <!-- 查询操作日志详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_sys_log a
+        <trim prefix="where" prefixOverrides="and">
+            and  a.log_id = #{logId}
+            and a.dr = 1
+        </trim>
+    </select>
+
+    <!-- 获取首页近七日登录日志信息 -->
+    <select id="getLogByHomeInfo" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_log a
+        <where>
+            and a.dr = 1 and a.biz_type = 1
+            and a.create_time BETWEEN #{beginTime} and #{endTime}
+        </where>
+        order by a.create_time asc
+    </select>
+
+    <!-- 根据操作类型获取数量 -->
+    <select id="getCountByOprType" resultType="java.lang.Integer">
+        select count(log_id)  from is_sys_log where dr = 1 and biz_type =  #{bizType}
+    </select>
+</mapper>

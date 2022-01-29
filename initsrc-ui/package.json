@@ -1,0 +1,53 @@
+{
+  "name": "initsrc-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@riophae/vue-treeselect": "^0.4.0",
+    "ali-oss": "^6.14.0",
+    "apexcharts": "^3.23.1",
+    "axios": "^0.21.1",
+    "clipboard": "^2.0.8",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.14.1",
+    "highlight.js": "^10.7.2",
+    "jsencrypt": "^3.1.0",
+    "nprogress": "^0.2.0",
+    "screenfull": "^5.1.0",
+    "shortid": "^2.2.16",
+    "vue": "^2.6.11",
+    "vue-apexcharts": "^1.6.0",
+    "vue-i18n": "^8.24.3",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0",
+    "wangeditor": "^4.7.1",
+    "xterm": "^4.12.0",
+    "xterm-addon-attach": "^0.6.0",
+    "xterm-addon-fit": "^0.5.0",
+    "xterm-addon-web-links": "^0.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.12.0",
+    "normalize.css": "^8.0.1",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

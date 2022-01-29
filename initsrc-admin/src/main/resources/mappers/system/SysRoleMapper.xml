@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.admin.system.dao.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.admin.system.entity.role.SysRole">
+        <id column="role_id" property="roleId" />
+        <result column="role_name" property="roleName" />
+        <result column="is_search" property="isSearch" />
+        <result column="power_depts" property="powerDepts" />
+        <result column="is_system" property="isSystem" />
+        <result column="status" property="status" />
+        <result column="des" property="des" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.admin.system.entity.role.vo.SysRoleListVo">
+        <id column="role_id" property="roleId" />
+        <result column="is_system" property="isSystem" />
+        <result column="role_name" property="roleName" />
+        <result column="is_search" property="isSearch" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.admin.system.entity.role.vo.SysRoleDetailVo">
+        <id column="role_id" property="roleId" />
+        <result column="role_name" property="roleName" />
+        <result column="is_search" property="isSearch" />
+        <result column="power_depts" property="powerDepts"  />
+        <result column="power_depts_name" property="powerDeptsName"  />
+        <result column="is_system" property="isSystem" />
+        <result column="status" property="status" />
+        <result column="des" property="des" />
+    </resultMap>
+
+
+
+    <!-- 列表展示字段 -->
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+            a.role_id,a.role_name,a.is_search,a.status,a.is_system,
+        </trim>
+    </sql>
+
+    <!-- 详情展示字段 -->
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+            a.role_id,a.role_name,a.is_search,a.power_depts,a.is_system,a.status,a.des,
+            (select   GROUP_CONCAT( d.name SEPARATOR ',' ) from is_sys_dept d where FIND_IN_SET(d.dept_id,a.power_depts)) as power_depts_name,
+        </trim>
+    </sql>
+
+    <!-- 查询角色列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_role a
+        <where>
+            <if test="roleName != null  and roleName != ''"> and a.role_name like concat('%', #{roleName}, '%')</if>
+            and a.dr = 1
+        </where>
+    </select>
+
+    <!-- 查询角色详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_sys_role a
+        <trim prefix="where" prefixOverrides="and">
+            and  a.role_id = #{roleId}
+            and a.dr = 1
+        </trim>
+    </select>
+
+    <!--  role_id字段关联查询列表-->
+    <select id="roleIdSelectData" resultType="com.initsrc.common.base.NodeEntity">
+        select role_id as id,role_name as label from is_sys_role where dr = 1
+    </select>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.admin.system.dao.SysDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.admin.system.entity.dict.SysDict">
+        <id column="dict_id" property="dictId" />
+        <result column="dict_key" property="dictKey" />
+        <result column="type" property="type" />
+        <result column="value" property="value" />
+        <result column="des" property="des" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.admin.system.entity.dict.vo.SysDictListVo">
+        <id column="dict_id" property="dictId" />
+        <result column="dict_key" property="dictKey" />
+        <result column="type" property="type" />
+        <result column="des" property="des" />
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.admin.system.entity.dict.vo.SysDictDetailVo">
+        <id column="dict_id" property="dictId" />
+        <result column="dict_key" property="dictKey" />
+        <result column="type" property="type" />
+        <result column="value" property="value" />
+        <result column="des" property="des" />
+    </resultMap>
+
+
+
+    <!-- 列表展示字段 -->
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+            a.dict_id,a.dict_key,a.type,a.des,
+        </trim>
+    </sql>
+
+    <!-- 详情展示字段 -->
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+            a.dict_id,a.dict_key,a.type,a.value,a.des,
+
+        </trim>
+    </sql>
+
+    <!-- 查询字典管理列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_dict a
+        <where>
+            <if test="dictKey != null  and dictKey != ''"> and a.dict_key like concat('%', #{dictKey}, '%')</if>
+            and a.dr = 1
+        </where>
+    </select>
+
+    <!-- 查询字典管理详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_sys_dict a
+
+        <trim prefix="where" prefixOverrides="and">
+            and  a.dict_id = #{id}
+            and a.dr = 1
+        </trim>
+    </select>
+
+</mapper>

@@ -1,0 +1,112 @@
+spring:
+  #redis配置
+  redis:
+    database: 0
+    host: 127.0.0.1
+    password:
+    port: 6379
+    jedis:
+      pool:
+        max-active: 50
+        max-idle: 8
+        min-idle: 0
+  #数据源
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    druid:
+      stat-view-servlet:
+        loginUsername: admin
+        loginPassword: 123456
+    dynamic:
+      p6spy: true
+      primary: master
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      min-evictable-idle-time-millis: 30000
+      max-evictable-idle-time-millis: 30000
+      time-between-eviction-runs-millis: 0
+      validation-query: select 1
+      validation-query-timeout: -1
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      max-open-prepared-statements: 100
+      filters: stat,wall
+      share-prepared-statements: true
+      datasource:
+        master:
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/initsrc?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+#        slave_1:
+#          userName:
+#          password:
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          url: jdbc:mysql://?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+#          druid: #以下均为默认值
+#            initial-size: 3
+#            max-active: 8
+#            min-idle: 2
+#            max-wait: -1
+#            min-evictable-idle-time-millis: 30000
+#            max-evictable-idle-time-millis: 30000
+#            time-between-eviction-runs-millis: 0
+#            validation-query: select 1
+#            validation-query-timeout: -1
+#            test-on-borrow: false
+#            test-on-return: false
+#            test-while-idle: true
+#            pool-prepared-statements: true
+#            max-open-prepared-statements: 100
+#            filters: stat,wall
+#            share-prepared-statements: true
+  #时间
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: true
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mappers/*/*.xml
+  typeAliasesPackage: com.initsrc.*.*.entity,com.initsrc.*.entity,    #实体扫描，多个package用逗号或者分号分隔
+  global-config:
+    db-config:
+      logic-delete-value: 0  #逻辑删除值
+      logic-not-delete-value: 1  #逻辑不删除值
+      id-type: assign_id
+  configuration:
+    map-underscore-to-camel-case: true  #驼峰命名
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#swagger
+initsrc:
+  swagger:
+    show: true
+    name: INITSRC
+    url: https://www.initsrc.com:8520/doc.html
+    email: 892500677@qq.com
+    title: INITSRC 系统管理 API
+    version: 1.0.0
+    contact: MISTAKEAI
+    license: license
+    licenseUrl: https://www.initsrc.com
+    description: 这是INITSRC的后台管理
+    termsOfServiceUrl: https://www.initsrc.com
+swagger:
+  basic:
+    enable: true
+    username: initsrc
+    password: initsrc123
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes:
+  # 匹配链接
+  urlPatterns: /*

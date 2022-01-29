@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.initsrc.admin.system.dao.SysPermMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.initsrc.admin.system.entity.perm.SysPerm">
+        <id column="perm_id" property="permId" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="resource" property="resource" />
+        <result column="component" property="component" />
+        <result column="perm" property="perm" />
+        <result column="icon" property="icon" />
+        <result column="color" property="color" />
+        <result column="is_cache" property="isCache" />
+        <result column="sort" property="sort" />
+        <result column="link_type" property="linkType" />
+        <result column="dr" property="dr" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 列表查询映射结果 -->
+    <resultMap id="ListResultMap" type="com.initsrc.admin.system.entity.perm.vo.SysPermListVo">
+        <id column="perm_id" property="permId" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="resource" property="resource" />
+        <result column="component" property="component" />
+        <result column="sort" property="sort" />
+        <result column="permName" property="permName" />
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="com.initsrc.admin.system.entity.perm.vo.SysPermDetailVo">
+        <id column="perm_id" property="permId" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="resource" property="resource" />
+        <result column="component" property="component" />
+        <result column="perm" property="perm" />
+        <result column="icon" property="icon" />
+        <result column="color" property="color" />
+        <result column="is_cache" property="isCache" />
+        <result column="sort" property="sort" />
+        <result column="link_type" property="linkType" />
+        <result column="permName" property="permName" />
+    </resultMap>
+
+
+
+    <!-- 列表展示字段 -->
+    <sql id="List_Column_List">
+        <trim  suffixOverrides=",">
+        a.perm_id,a.parent_id,a.name,a.path,a.resource,a.component,a.sort,
+        (select name from is_sys_perm where perm_id  = a.parent_id limit 1) as permName,
+        </trim>
+    </sql>
+
+    <!-- 详情展示字段 -->
+    <sql id="Detail_Column_List">
+        <trim  suffixOverrides=",">
+        a.perm_id,a.parent_id,a.name,a.path,a.resource,a.component,a.perm,a.icon,a.color,a.is_cache,a.sort,a.link_type,
+        (select name from is_sys_perm where perm_id  = a.parent_id limit 1) as permName,
+        </trim>
+    </sql>
+
+    <!-- 查询权限表列表-->
+    <select id="findList" resultMap="ListResultMap">
+        select
+        <include refid="List_Column_List"/>
+        from is_sys_perm a
+        <where>
+            <if test="parentId != null  and parentId != ''"> and a.parent_id = #{parentId}</if>
+            <if test="name != null  and name != ''"> and a.name = #{name}</if>
+               and a.dr = 1
+        </where>
+    </select>
+
+    <!-- 查询权限表详情 -->
+    <select id="selectDetailById" resultMap="DetailResultMap">
+        select
+        <include refid="Detail_Column_List"/>
+        from is_sys_perm a
+        <trim prefix="where" prefixOverrides="and">
+            and  a.perm_id = #{permId}
+            and a.dr = 1
+        </trim>
+    </select>
+
+    <!--根据父类ID获取子类数量 -->
+    <select id="selectByParendId" resultType="java.lang.Integer">
+        select count(1) from is_sys_perm
+        <trim prefix="where" prefixOverrides="and">
+            and dr = 1
+            and parent_id = #{id}
+        </trim>
+    </select>
+
+    <!--  parent_id字段关联查询列表-->
+    <select id="parentIdSelectData" resultType="com.initsrc.common.base.NodeEntity">
+        select perm_id as id,parent_id as parentId,name as label from is_sys_perm where dr = 1
+    </select>
+
+    <!-- 获取所有权限 -->
+    <select id="getAllPermList" resultType="com.initsrc.common.base.LoginPermVo">
+        select a.perm_id as id,a.parent_id,a.name,a.path,a.resource,a.component,a.perm,a.icon,a.color,a.sort,a.link_type,a.is_cache
+        from is_sys_perm a
+        WHERE
+            a.dr = 1
+        GROUP BY
+            a.perm_id
+        order by a.sort asc
+    </select>
+
+    <!-- 根据角色获取权限 -->
+    <select id="getPermListByRoleId" resultType="com.initsrc.common.base.LoginPermVo">
+        select a.perm_id as id,a.parent_id,a.name,a.path,a.resource,a.component,a.perm,a.icon,a.color,a.sort,a.link_type,a.is_cache
+        from is_sys_perm a
+                 LEFT JOIN is_sys_role_perm rp ON rp.perm_id = a.perm_id
+        WHERE
+            a.dr = 1
+          AND  FIND_IN_SET (rp.role_id,#{roleId})
+        GROUP BY
+            a.perm_id
+        order by a.sort asc
+    </select>
+</mapper>

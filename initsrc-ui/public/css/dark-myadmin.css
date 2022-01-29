@@ -1,0 +1,255 @@
+/**
+ * 暗色调
+ */
+html,
+#app,
+body {
+	color: #8687a7;
+	background-color: #17212f;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #e0e0e0;
+}
+
+.el-aside {
+	background-color: #1e2938;
+}
+
+.dshfn-aside-user .user-info a {
+	color: #FFFFFF;
+}
+
+.dshfn-aside-user .user-info .text-body {
+	color: #8687a7;
+}
+
+.card {
+	background-color: #1e2938 !important;
+	border: 0 solid #364458 !important;
+}
+
+/**
+ * 内容区域
+ */
+.dshfn-content-header {
+	/* background-color: #1e2938; */
+	border-bottom: 1px solid #17212f;
+}
+
+
+.dshfn-header-tabs {
+	background-color: #1e2938;
+}
+
+.dshfn-tabs-content .el-tabs__header .el-tabs__item.is-active,
+.dshfn-tabs-content .el-tabs__header .el-tabs__item.is-active:hover {
+	background-color: #17212f;
+}
+
+.dshfn-tabs-content .el-tabs__header .el-tabs__item:hover {
+	background: #464749 !important;
+}
+
+.dshfn-content-title {
+	color: #FFFFFF;
+}
+
+.dshfn-tree-content {
+	background-color: #1e2938;
+	border-right: 5px #17212f solid !important;
+}
+
+.dshfn-card {
+	background-color: #1e2938;
+	border: 0 solid #364458;
+}
+
+.dshfn-table-content {
+	background-color: #1e2938;
+}
+
+.add-background {
+	background-color: #1e2938;
+}
+
+.dshfn-content-select {
+	background-color: #1e2938;
+	box-shadow: 0 6px 8px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dshfn-content-tap {
+	background-color: #1e2938;
+}
+
+.img-thumbnail {
+	padding: 0.25rem;
+	background-color: #17212f;
+	border: 1px solid #364458;
+	border-radius: 0.25rem;
+	max-width: 100%;
+	height: auto;
+}
+
+/**
+ * 抽屉详情样式
+ */
+
+.dshfn-commonDrawer .detail-header {
+	background-color: #bfbfbf !important;
+	color: #353535 !important;
+}
+
+.dshfn-commonDrawer .footer {
+	border-top: 1px solid #17212f;
+	background: #17212f;
+}
+
+.dshfn-commonDrawer .dshfn-form{
+	background-color: #1e2938;
+	height: 100%;
+}
+
+
+/* 固定底部按钮框 */
+.dshfn-footer-btn {
+	background-color: #1e2938 !important;
+	box-shadow: 0 -4px 8px 0 rgba(255, 255, 255, 0.1);
+}
+
+
+/**
+ * chart 组件
+ */
+.apexcharts-yaxis text,
+.apexcharts-xaxis text {
+	font-family: "SF UI Text", sans-serif !important;
+	fill: #757b90;
+}
+
+.apexcharts-legend-text {
+	color: #969aa5 !important;
+	font-family: "SF UI Text", sans-serif !important;
+	font-size: 13px !important;
+}
+
+/**
+ * 权限展示
+ */
+.permission li {
+	border-bottom: 1px solid #28313a;
+}
+
+.permission h4 {
+	background-color: #28313A !important;
+	border-bottom: 1px solid #28313A !important;
+}
+
+/**
+ * element 组件样式
+ */
+
+/**
+ * 时间选择器输入框样式
+ */
+.el-range-input {
+  background: #17212f;
+}
+
+.dshfn-aside-menu .el-menu .is-active .el-submenu__title i,
+.dshfn-aside-menu .el-menu .is-active .el-submenu__title span {
+	color: #3b5de7;
+}
+
+.dshfn-aside-menu .el-submenu__title:hover i,
+.dshfn-aside-menu .el-submenu__title:hover span {
+	color: #3b5de7;
+}
+
+.dshfn-aside-menu .el-menu-item:hover {
+	background-color: #17212f !important;
+	color: #3b5de7 !important;
+}
+
+.dshfn-aside-menu .el-menu-item:hover i {
+	color: #3b5de7 !important;
+}
+
+.dshfn-aside-menu .el-menu-item:hover {
+	background-color: #17212f !important;
+	color: #3b5de7 !important;
+}
+
+.dshfn-aside-menu .el-menu-item.is-active {
+	background-color: #17212f !important;
+	color: #3b5de7 !important;
+}
+
+.el-drawer__body{
+	background-color: #17212f !important;
+}
+
+ 
+/**
+ * 富文本框
+ */
+.editor .w-e-toolbar, .w-e-text-container, .w-e-menu-panel{
+	background-color: #17212f !important;
+}
+
+.editor .text{
+	border: none !important;
+}
+
+.editor .toolbar{
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: #eee 1px solid;
+}
+
+@media (max-width: 768px) {
+	.el-dialog__footer {
+		border-top: 1px solid #17212f;
+		background: #17212f;
+	}
+	.dshfn-tree-content {
+		border-bottom: 10px solid #17212f !important;
+		border-right: none !important;
+	}
+}
+
+/**
+ * 树形下拉
+ */
+
+.vue-treeselect__control{
+	background-color: #17212f !important;
+	border: none !important;
+}
+.vue-treeselect__menu{
+	background-color: #17212f !important;
+	border: none !important;
+}
+.vue-treeselect__option--selected{
+	background-color: gray !important;
+}
+
+.vue-treeselect__option:hover{
+	background-color: gray !important;
+}
+
+.vue-treeselect__single-value{
+	color: #fff !important;
+}
